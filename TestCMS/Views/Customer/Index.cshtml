@@ -1,0 +1,34 @@
+﻿<form id="customerForm">
+    <input type="hidden" id="customerId" />
+    <input type="text" id="firstName" placeholder="First Name" />
+    <input type="text" id="lastName" placeholder="Last Name" />
+    <input type="email" id="email" placeholder="Email" />
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById("customerForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const id = document.getElementById("customerId").value;
+        const customer = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value
+        };
+
+        let method = id ? "PUT" : "POST";
+        let url = id ? `/api/customer/${id}` : "/api/customer";
+
+        await fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(customer)
+        });
+
+        // Clear form and reload list
+    });
+</script>
+
